@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const request = require('supertest-as-promised');
 const httpStatus = require('http-status');
 const chai = require('chai'); // eslint-disable-line import/newline-after-import
-const expect = chai.expect;
+const { expect } = chai;
 const app = require('../../index');
 
 chai.config.includeStack = true;
@@ -67,13 +67,13 @@ describe('## User APIs', () => {
 
   describe('# PUT /api/users/:userId', () => {
     it('should update user details', (done) => {
-      user.username = 'KK';
+      user.username = 'lele';
       request(app)
         .put(`/api/users/${user._id}`)
         .send(user)
         .expect(httpStatus.OK)
         .then((res) => {
-          expect(res.body.username).to.equal('KK');
+          expect(res.body.username).to.equal('lele');
           expect(res.body.mobileNumber).to.equal(user.mobileNumber);
           done();
         })

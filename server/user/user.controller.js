@@ -44,7 +44,7 @@ function create(req, res, next) {
  * @returns {User}
  */
 function update(req, res, next) {
-  const user = req.user;
+  const { user } = req;
   user.username = req.body.username;
   user.mobileNumber = req.body.mobileNumber;
 
@@ -71,10 +71,12 @@ function list(req, res, next) {
  * @returns {User}
  */
 function remove(req, res, next) {
-  const user = req.user;
+  const { user } = req;
   user.remove()
     .then(deletedUser => res.json(deletedUser))
     .catch(e => next(e));
 }
 
-module.exports = { load, get, create, update, list, remove };
+module.exports = {
+  load, get, create, update, list, remove
+};
