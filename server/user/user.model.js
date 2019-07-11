@@ -7,15 +7,51 @@ const APIError = require('../helpers/APIError');
  * User Schema
  */
 const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true
-  },
   mobileNumber: {
     type: String,
     required: true,
-    match: [/^[1-9][0-9]{9}$/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
+    match: [/^[1-9][0-9]{10}$/, 'The value of path {PATH} ({VALUE}) is not a valid mobile number.']
   },
+  password: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+  },
+  // 邀请码
+  spreadCode: {
+    type: String,
+  },
+  // 受邀码
+  invitedCode: {
+    type: String,
+  },
+  // 微信号
+  wechat: {
+    type: String,
+  },
+  // 已购产品列表
+  purchasedProducts: {
+    type: [String],
+    default: []
+  },
+  // 利率红包列表
+  ratePackets: {
+    type: [String],
+    default: []
+  },
+  // 总资产
+  totalAsset: {
+    type: Number,
+    default: 0
+  },
+  // 预期总收益
+  expectEarn: {
+    type: Number,
+    default: 0
+  },
+  // 用户创建时间
   createdAt: {
     type: Date,
     default: Date.now
@@ -54,6 +90,19 @@ UserSchema.statics = {
         const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
         return Promise.reject(err);
       });
+  },
+  /**
+   * Get user
+   * @param {Number} mobileNumber - The mobileNumber of user.
+   * @returns {Promise<User, APIError>}
+   */
+  getByMobileNumber(mobileNumber) {
+    return this.findOne({ mobileNumber }).exec().then((user) => {
+      if (user) {
+        return user;
+      }
+      return null;
+    });
   },
 
   /**

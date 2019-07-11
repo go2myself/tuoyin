@@ -38,7 +38,9 @@ const config = {
   mongo: {
     host: envVars.MONGO_HOST,
     port: envVars.MONGO_PORT
-  }
+  },
+  imagesDir: `${process.mainModule.path}/public/images`,
+  imagesTempDir: `${process.mainModule.path}/public/images`,
 };
 
 module.exports = config;

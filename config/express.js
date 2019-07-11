@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 const httpStatus = require('http-status');
 const expressValidation = require('express-validation');
+const formidableMiddleware = require('express-formidable');
 const helmet = require('helmet');
 const winstonInstance = require('./winston');
 const routes = require('../index.route');
@@ -32,12 +33,15 @@ app.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
+// formidable
+app.use('/api/image', formidableMiddleware({ uploadDir: config.imagesTempDir, type: 'multipart' }));
 
 // enable detailed API logging in dev env
 if (config.env === 'development') {
   app.use(winstonInstance.requestLogger);
 }
-
+// image static
+app.use(express.static('public'));
 // mount all routes on /api path
 app.use('/api', routes);
 
