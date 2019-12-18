@@ -9,5 +9,6 @@ router.route('/:articleId')
   .get(articleCtrl.getDetail)
   .put(articleCtrl.update)
   .delete(articleCtrl.remove);
+router.route('/loadHtml/:articleId').get(articleCtrl.getHTML);
 router.param('articleId', articleCtrl.loadParam);
 module.exports = router;

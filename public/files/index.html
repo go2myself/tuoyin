@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script text="text/javascript">
+  var getTitle = function(){
+    return document.getElementById('h1Title').innerHTML
+  }
+  </script>
+</head>
+<body>
+  <h1 id="h1Title">我是测试html页面</h1>
+  <button onclick="window.exchangeDataToReact(getTitle())">点击提交title</button>
+</body>
+</html>

@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const compress = require('compression');
 const methodOverride = require('method-override');
 const cors = require('cors');
@@ -19,7 +20,9 @@ const app = express();
 if (config.env === 'development') {
   app.use(logger('dev'));
 }
-
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,7 +32,12 @@ app.use(compress());
 app.use(methodOverride());
 
 // secure apps by setting various HTTP headers
-app.use(helmet());
+// 允许iframe
+app.use(helmet(
+  {
+    frameguard: false
+  }
+));
 
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());

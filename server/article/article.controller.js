@@ -45,3 +45,11 @@ exports.getDetail = (req, res, next) => {
     next(new Error('未查到该文章'));
   }
 };
+exports.getHTML = (req, res, next) => {
+  const { article } = req;
+  if (article) {
+    res.render('article', { content: article.content.html });
+  } else {
+    next(new Error('未查到该文章'));
+  }
+};
